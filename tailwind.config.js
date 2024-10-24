@@ -6,7 +6,11 @@ export default {
       center: true,
       padding: "1rem",
     },
-    extend: {},
+    extend: {
+      fontFamily: {
+        roboto: ["Roboto", "sans-serif"],
+      },
+    },
   },
-  plugins: [require("daisyui")],
+  plugins: [require("daisyui", "@tailwindcss/typography")],
 };
