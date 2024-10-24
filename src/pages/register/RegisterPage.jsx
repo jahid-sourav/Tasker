@@ -1,14 +1,73 @@
+import { sendEmailVerification, updateProfile } from "firebase/auth";
 import { useState } from "react";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { FaRegEye } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import Field from "../../components/Field";
 import PageTitle from "../../components/PageTitle";
 import PrimaryButton from "../../components/PrimaryButton";
+import useAuth from "../../hooks/useAuth";
 
 const RegisterPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [error, setError] = useState("");
+  const { register } = useAuth();
+  const navigate = useNavigate();
+
+  const [registerUser, setRegisterUser] = useState({
+    name: "",
+    email: "",
+    imageURL: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setRegisterUser({
+      ...registerUser,
+      [name]: value,
+    });
+  };
+
+  const handleRegister = (event) => {
+    event.preventDefault();
+
+    setError("");
+
+    // Validation
+    if (registerUser.password.length < 8) {
+      toast.error("Please Give Min. 8 Digit Password!");
+      return;
+    } else if (registerUser.password !== registerUser.confirmPassword) {
+      toast.error("Password and Confirm Password does not match!");
+      return;
+    }
+
+    register(registerUser.email, registerUser.password)
+      .then((result) => {
+        updateProfile(result.user, {
+          displayName: registerUser.name,
+          photoURL: registerUser.imageURL,
+        })
+          .then(() => {
+            navigate("/login");
+          })
+          .catch((error) => {
+            setError(error.message);
+          });
+        sendEmailVerification(result.user)
+          .then(() => {
+            toast.warning("Please Verify Your Email");
+          })
+          .catch((error) => setError(error.message));
+      })
+      .catch((error) => {
+        setError(error.message);
+      });
+  };
 
   return (
     <section className="py-5">
@@ -19,13 +78,15 @@ const RegisterPage = () => {
             <h1 className="font-bold text-4xl text-center mb-5">
               Register Page
             </h1>
-            <form className="w-[300px]">
+            <form className="w-[300px]" onSubmit={handleRegister}>
               <Field
                 required={true}
                 htmlFor="name"
                 label="Name"
                 inputType="text"
                 inputName="name"
+                value={registerUser.name}
+                onChange={handleChange}
                 inputID="name"
                 placeholder="Enter Your Name"
               />
@@ -36,6 +97,8 @@ const RegisterPage = () => {
                 label="Email"
                 inputType="email"
                 inputName="email"
+                value={registerUser.email}
+                onChange={handleChange}
                 inputID="email"
                 placeholder="Enter Your Email"
               />
@@ -46,6 +109,8 @@ const RegisterPage = () => {
                 label="Image URL"
                 inputType="url"
                 inputName="imageURL"
+                value={registerUser.imageURL}
+                onChange={handleChange}
                 inputID="imageURL"
                 placeholder="Enter Your Image URL"
               />
@@ -56,6 +121,8 @@ const RegisterPage = () => {
                 label="Password"
                 inputType={showPassword ? "text" : "password"}
                 inputName="password"
+                value={registerUser.password}
+                onChange={handleChange}
                 inputID="password"
                 placeholder="Enter Your Password"
               >
@@ -74,6 +141,8 @@ const RegisterPage = () => {
                 label="Confirm Password"
                 inputType={showConfirmPassword ? "text" : "password"}
                 inputName="confirmPassword"
+                value={registerUser.confirmPassword}
+                onChange={handleChange}
                 inputID="confirmPassword"
                 placeholder="Enter Your Password Again"
               >
@@ -85,7 +154,7 @@ const RegisterPage = () => {
                   {showConfirmPassword ? <FaRegEyeSlash /> : <FaRegEye />}
                 </button>
               </Field>
-
+              <p className="my-2 text-red-500">{error}</p>
               <div className="text-center">
                 <PrimaryButton buttonType="submit" buttonName="Register" />
               </div>

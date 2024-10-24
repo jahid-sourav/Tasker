@@ -1,5 +1,5 @@
 import { createContext } from "react";
 
 const TasksContext = createContext();
-
-export { TasksContext };
+const AuthContext = createContext();
+export { AuthContext, TasksContext };
