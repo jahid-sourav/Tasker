@@ -1,4 +1,3 @@
-import { CiDark } from "react-icons/ci";
 import { NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Logo from "../assets/logo.png";
@@ -79,11 +78,6 @@ const Header = () => {
               >
                 Create Task
               </NavLink>
-            </li>
-            <li>
-              <button type="button" className="text-2xl mt-1">
-                <CiDark />
-              </button>
             </li>
           </ul>
         </div>
