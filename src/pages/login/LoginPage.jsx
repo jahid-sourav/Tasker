@@ -11,7 +11,7 @@ import useAuth from "../../hooks/useAuth";
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
-  const { login, googleLogin, resetPassword } = useAuth();
+  const { login, googleLogin, gitHubLogin, resetPassword } = useAuth();
   const navigate = useNavigate();
   const emailRef = useRef(null);
 
@@ -61,6 +61,17 @@ const LoginPage = () => {
       })
       .catch((error) => {
         setError(error.message);
+      });
+  };
+
+  const handleGitHubLogin = () => {
+    gitHubLogin()
+      .then(() => {
+        navigate("/me");
+      })
+      .catch((error) => {
+        setError(error.message);
+        console.error("GitHub login error", error);
       });
   };
 
@@ -179,7 +190,10 @@ const LoginPage = () => {
                   </defs>
                 </svg>
               </button>
-              <button className="bg-white dark:bg-gray-900 dark:border-gray-700 dark:hover:bg-gray-800 rounded-lg hover:bg-gray-100 duration-300 transition-colors border px-8 py-2.5">
+              <button
+                onClick={handleGitHubLogin}
+                className="bg-white dark:bg-gray-900 dark:border-gray-700 dark:hover:bg-gray-800 rounded-lg hover:bg-gray-100 duration-300 transition-colors border px-8 py-2.5"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="currentColor"
