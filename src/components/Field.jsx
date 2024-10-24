@@ -8,6 +8,8 @@ const Field = ({
   inputID,
   placeholder,
   children,
+  value,
+  required,
 }) => {
   return (
     <div className="mb-3">
@@ -16,7 +18,8 @@ const Field = ({
       </label>
       <div className="mt-1 relative">
         <input
-          required
+          required={required}
+          value={value}
           type={inputType}
           name={inputName}
           id={inputID}
@@ -36,7 +39,9 @@ Field.propTypes = {
   inputName: PropTypes.string,
   inputID: PropTypes.string,
   placeholder: PropTypes.string,
+  value: PropTypes.string,
   children: PropTypes.node,
+  required: PropTypes.bool,
 };
 
 export default Field;

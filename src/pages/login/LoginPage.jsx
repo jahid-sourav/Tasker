@@ -23,6 +23,7 @@ const LoginPage = () => {
                 </label>
                 <div className="mt-1">
                   <input
+                    required={true}
                     type="email"
                     name="email"
                     id="email"
@@ -32,6 +33,7 @@ const LoginPage = () => {
                 </div>
               </div>
               <Field
+                required={true}
                 htmlFor="password"
                 label="Password"
                 inputType={showPassword ? "text" : "password"}

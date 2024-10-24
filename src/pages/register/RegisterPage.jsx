@@ -21,6 +21,7 @@ const RegisterPage = () => {
             </h1>
             <form className="w-[300px]">
               <Field
+                required={true}
                 htmlFor="name"
                 label="Name"
                 inputType="text"
@@ -30,6 +31,7 @@ const RegisterPage = () => {
               />
 
               <Field
+                required={true}
                 htmlFor="email"
                 label="Email"
                 inputType="email"
@@ -39,6 +41,7 @@ const RegisterPage = () => {
               />
 
               <Field
+                required={true}
                 htmlFor="imageURL"
                 label="Image URL"
                 inputType="url"
@@ -48,6 +51,7 @@ const RegisterPage = () => {
               />
 
               <Field
+                required={true}
                 htmlFor="password"
                 label="Password"
                 inputType={showPassword ? "text" : "password"}
@@ -65,6 +69,7 @@ const RegisterPage = () => {
               </Field>
 
               <Field
+                required={true}
                 htmlFor="confirmPassword"
                 label="Confirm Password"
                 inputType={showConfirmPassword ? "text" : "password"}
