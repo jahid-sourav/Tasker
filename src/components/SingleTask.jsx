@@ -6,7 +6,10 @@ const SingleTask = () => {
   return (
     <div className="p-1 bg-white mb-3 rounded-md flex justify-center items-center flex-wrap gap-3">
       1.{" "}
-      <Link to="/me" className="font-semibold text-lg mr-2 text-green-500">
+      <Link
+        to="/task-detail"
+        className="font-semibold text-lg mr-2 text-green-500"
+      >
         Lorem ipsum dolor sit.
       </Link>
       <div className="flex flex-wrap">

@@ -4,6 +4,7 @@ import RootLayout from "../layouts/RootLayout";
 import CreateTask from "../pages/dashboard/AddTask";
 import EditTask from "../pages/dashboard/EditTask";
 import Profile from "../pages/dashboard/Profile";
+import TaskDetail from "../pages/dashboard/TaskDetail";
 import HomePage from "../pages/home/HomePage";
 import LoginPage from "../pages/login/LoginPage";
 import RegisterPage from "../pages/register/RegisterPage";
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: "/me",
         element: <Profile />,
+      },
+      {
+        path: "/task-detail",
+        element: <TaskDetail />,
       },
       {
         path: "/create-task",
