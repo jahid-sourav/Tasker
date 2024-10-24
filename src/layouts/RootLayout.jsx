@@ -5,10 +5,12 @@ import Header from "../components/Header";
 const RootLayout = () => {
   const location = useLocation();
   const homePage = location.pathname === "/";
+  const loginPage = location.pathname === "/login";
+  const registerPage = location.pathname === "/register";
 
   return (
     <>
-      {!homePage && <Header />}
+      {!homePage && !loginPage && !registerPage && <Header />}
       <Outlet />
     </>
   );
