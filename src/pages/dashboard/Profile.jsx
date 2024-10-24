@@ -3,8 +3,11 @@ import Field from "../../components/Field";
 import PageTitle from "../../components/PageTitle";
 import PrimaryButton from "../../components/PrimaryButton";
 import SingleTask from "../../components/SingleTask";
+import useTasks from "../../hooks/useTasks";
 
 const Profile = () => {
+  const { tasks } = useTasks();
+
   return (
     <section className="py-5">
       <PageTitle pageName="Profile" />
@@ -48,7 +51,9 @@ const Profile = () => {
           </div>
           <div>
             <div className="text-center mb-6">
-              <h2 className="text-2xl font-bold">Total Tasks : </h2>
+              <h2 className="text-2xl font-bold">
+                Total Tasks : {tasks.length}
+              </h2>
               <div className="mt-5">
                 <Link
                   to="/create-task"
@@ -58,14 +63,13 @@ const Profile = () => {
                 </Link>
               </div>
             </div>
-            <div className="p-2 rounded bg-slate-400 border border-blue-300">
-              <SingleTask />
-              <SingleTask />
-              <SingleTask />
-              <SingleTask />
-              <SingleTask />
-              <SingleTask />
-            </div>
+            {tasks.length > 0 && (
+              <div className="p-2 rounded bg-slate-400 border border-blue-300">
+                {tasks.map((task, index) => (
+                  <SingleTask key={task.id} task={task} number={index} />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

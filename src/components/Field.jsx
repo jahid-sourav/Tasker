@@ -10,6 +10,7 @@ const Field = ({
   children,
   value,
   required,
+  onChange,
 }) => {
   return (
     <div className="mb-3">
@@ -18,6 +19,7 @@ const Field = ({
       </label>
       <div className="mt-1 relative">
         <input
+          onChange={onChange}
           required={required}
           value={value}
           type={inputType}
@@ -42,6 +44,7 @@ Field.propTypes = {
   value: PropTypes.string,
   children: PropTypes.node,
   required: PropTypes.bool,
+  onChange: PropTypes.func,
 };
 
 export default Field;

@@ -1,29 +1,31 @@
+import { useParams } from "react-router";
 import PageTitle from "../../components/PageTitle";
+import useTasks from "../../hooks/useTasks";
 
 const TaskDetail = () => {
+  const { id } = useParams();
+  const { tasks } = useTasks();
+
+  const task = tasks.find((item) => item.id === id);
+
   return (
     <section className="py-5">
-      <PageTitle pageName="Task Detail" />
+      <PageTitle pageName={task.title} />
       <div className="container">
         <img
-          src="https://media.sproutsocial.com/uploads/3a_facebook-cover-photo_labels@2x-1.png"
-          alt="Cover"
+          src={task.imageURL}
+          alt={task.title}
           className="w-full h-[300px] object-cover rounded-md"
         />
 
         <h1 className="font-bold text-4xl my-5 flex flex-wrap gap-2 items-center justify-center">
-          Task Detail{" "}
+          {task.title}{" "}
           <span className="bg-green-500 text-white p-2 rounded font-medium text-base">
-            Medium
+            {task.hierarchy}
           </span>
         </h1>
 
-        <p className="font-medium text-lg">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur,
-          totam obcaecati minima in molestias iusto eum, incidunt ea inventore
-          sint a vitae delectus necessitatibus. Quisquam labore quis eos
-          dignissimos perferendis
-        </p>
+        <p className="font-medium text-lg">{task.description}</p>
       </div>
     </section>
   );

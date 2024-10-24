@@ -31,15 +31,15 @@ const router = createBrowserRouter([
         element: <Profile />,
       },
       {
-        path: "/task-detail",
-        element: <TaskDetail />,
-      },
-      {
         path: "/create-task",
         element: <CreateTask />,
       },
       {
-        path: "/edit-task",
+        path: "/tasks/:id",
+        element: <TaskDetail />,
+      },
+      {
+        path: "/edit-task/:id",
         element: <EditTask />,
       },
     ],

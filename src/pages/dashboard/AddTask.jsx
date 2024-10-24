@@ -1,14 +1,54 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 import Field from "../../components/Field";
 import PageTitle from "../../components/PageTitle";
 import PrimaryButton from "../../components/PrimaryButton";
+import useTasks from "../../hooks/useTasks";
 
 const CreateTask = () => {
+  const { tasks, setTasks } = useTasks();
+
+  const navigate = useNavigate();
+
+  const [task, setTask] = useState({
+    id: crypto.randomUUID(),
+    title: "",
+    imageURL: "",
+    description: "",
+    hierarchy: "",
+    isFavorite: false,
+  });
+
+  const handleChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+
+    setTask({
+      ...task,
+      [name]: value,
+    });
+  };
+
+  const handleCreateTask = (event) => {
+    event.preventDefault();
+    setTasks([...tasks, task]);
+    toast.success("Task Added!");
+    setTimeout(() => {
+      navigate("/me");
+    }, 0);
+  };
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
+
   return (
     <section className="py-5">
       <PageTitle pageName="Create A Task" />
       <div className="container">
         <h1 className="text-center text-4xl font-bold mb-5">Create A Task</h1>
-        <form>
+        <form onSubmit={handleCreateTask}>
           <div className="flex gap-6 flex-wrap">
             <div className="w-full md:w-[48%]">
               <Field
@@ -19,6 +59,8 @@ const CreateTask = () => {
                 inputID="title"
                 placeholder="Enter The Task Title"
                 required={true}
+                value={task.title}
+                onChange={handleChange}
               />
             </div>
 
@@ -31,6 +73,8 @@ const CreateTask = () => {
                 inputID="imageURL"
                 placeholder="Enter The Cover Image URL"
                 required={true}
+                value={task.imageURL}
+                onChange={handleChange}
               />
             </div>
 
@@ -39,6 +83,8 @@ const CreateTask = () => {
                 Description
               </label>
               <textarea
+                value={task.description}
+                onChange={handleChange}
                 required
                 name="description"
                 id="description"
@@ -56,9 +102,11 @@ const CreateTask = () => {
               <select
                 required
                 name="hierarchy"
+                value={task.hierarchy}
+                onChange={handleChange}
                 className="bg-black text-white font-medium text-lg p-2 rounded-md w-full"
               >
-                <option value="" selected disabled>
+                <option value="" disabled>
                   Select The Hierarchy
                 </option>
                 <option value="Medium">Medium</option>
