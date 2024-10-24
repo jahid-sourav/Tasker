@@ -2,12 +2,12 @@ import Field from "../../components/Field";
 import PageTitle from "../../components/PageTitle";
 import PrimaryButton from "../../components/PrimaryButton";
 
-const CreateTask = () => {
+const EditTask = () => {
   return (
     <section className="py-5">
-      <PageTitle pageName="Create A Task" />
+      <PageTitle pageName="Edit Task" />
       <div className="container">
-        <h1 className="text-center text-4xl font-bold mb-5">Create A Task</h1>
+        <h1 className="text-center text-4xl font-bold mb-5">Edit Task</h1>
         <form>
           <div className="flex gap-6 flex-wrap">
             <div className="w-full md:w-[48%]">
@@ -18,7 +18,7 @@ const CreateTask = () => {
                 inputName="title"
                 inputID="title"
                 placeholder="Enter The Task Title"
-                required={true}
+                value="Beta Value De"
               />
             </div>
 
@@ -30,7 +30,7 @@ const CreateTask = () => {
                 inputName="imageURL"
                 inputID="imageURL"
                 placeholder="Enter The Cover Image URL"
-                required={true}
+                value="Beta Value De"
               />
             </div>
 
@@ -39,7 +39,7 @@ const CreateTask = () => {
                 Description
               </label>
               <textarea
-                required
+                value="Beta Value De"
                 name="description"
                 id="description"
                 className="p-2 rounded border border-gray-400 w-full outline-none"
@@ -54,7 +54,6 @@ const CreateTask = () => {
                 </label>
               </div>
               <select
-                required
                 name="hierarchy"
                 className="bg-black text-white font-medium text-lg p-2 rounded-md w-full"
               >
@@ -67,7 +66,7 @@ const CreateTask = () => {
             </div>
           </div>
           <div className="text-center mt-4">
-            <PrimaryButton buttonName="Create Task" buttonType="submit" />
+            <PrimaryButton buttonName="Update Task" buttonType="submit" />
           </div>
         </form>
       </div>
@@ -75,4 +74,4 @@ const CreateTask = () => {
   );
 };
 
-export default CreateTask;
+export default EditTask;

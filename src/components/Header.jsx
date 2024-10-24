@@ -31,9 +31,7 @@ const Header = () => {
                   <NavLink
                     to="/me"
                     className={({ isActive }) =>
-                      `${
-                        isActive ? "text-green-400" : ""
-                      } font-semibold text-lg`
+                      `${isActive ? "text-green-400" : ""} font-semibold`
                     }
                   >
                     Profile

@@ -1,6 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import RootLayout from "../layouts/RootLayout";
 
+import CreateTask from "../pages/dashboard/AddTask";
+import EditTask from "../pages/dashboard/EditTask";
 import Profile from "../pages/dashboard/Profile";
 import HomePage from "../pages/home/HomePage";
 import LoginPage from "../pages/login/LoginPage";
@@ -26,6 +28,14 @@ const router = createBrowserRouter([
       {
         path: "/me",
         element: <Profile />,
+      },
+      {
+        path: "/create-task",
+        element: <CreateTask />,
+      },
+      {
+        path: "/edit-task",
+        element: <EditTask />,
       },
     ],
   },

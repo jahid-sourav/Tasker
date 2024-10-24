@@ -1,3 +1,4 @@
+import { FaPen } from "react-icons/fa";
 import { FaRegTrashCan } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
@@ -8,9 +9,14 @@ const SingleTask = () => {
       <Link to="/me" className="font-semibold text-lg mr-2 text-green-500">
         Lorem ipsum dolor sit.
       </Link>
-      <button className="text-red-600">
-        <FaRegTrashCan />
-      </button>
+      <div className="flex flex-wrap">
+        <button className="text-red-600 mr-3">
+          <FaRegTrashCan />
+        </button>
+        <Link to="/edit-task" className="text-green-600">
+          <FaPen />
+        </Link>
+      </div>
     </div>
   );
 };
