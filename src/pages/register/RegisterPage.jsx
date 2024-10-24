@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { FaRegEye } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 import Field from "../../components/Field";
 import PageTitle from "../../components/PageTitle";
 import PrimaryButton from "../../components/PrimaryButton";
@@ -84,6 +85,13 @@ const RegisterPage = () => {
                 <PrimaryButton buttonType="submit" buttonName="Register" />
               </div>
             </form>
+            <p className="mt-4 font-semibold text-lg">
+              Do You Have any Account? Please{" "}
+              <Link to="/login" className="underline text-green-500">
+                Login
+              </Link>{" "}
+              here!
+            </p>
           </div>
         </div>
       </div>
