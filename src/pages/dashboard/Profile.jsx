@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import Field from "../../components/Field";
 import PageTitle from "../../components/PageTitle";
 import PrimaryButton from "../../components/PrimaryButton";
@@ -8,7 +10,39 @@ import useTasks from "../../hooks/useTasks";
 
 const Profile = () => {
   const { tasks } = useTasks();
-  const { user, loading } = useAuth();
+  const { user, updateUserProfile, loading } = useAuth();
+  const [loggedInUser, setLoggedInUser] = useState({
+    name: "",
+    imageURL: "",
+  });
+
+  useEffect(() => {
+    setLoggedInUser({
+      name: user?.displayName || "",
+      imageURL: user?.photoURL || "",
+    });
+  }, [user]);
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    setLoggedInUser({
+      ...loggedInUser,
+      [name]: value,
+    });
+  };
+
+  const handleUpdateProfile = (event) => {
+    event.preventDefault();
+    updateUserProfile(user, loggedInUser?.name, loggedInUser?.imageURL)
+      .then(() => {
+        toast.success("Profile updated successfully!");
+      })
+      .catch((error) => {
+        console.error("Error updating profile:", error);
+        toast.error("Failed to update profile.");
+      });
+  };
 
   if (loading) {
     return (
@@ -37,14 +71,18 @@ const Profile = () => {
                 />
               </div>
             </div>
-            <form className="w-min-[300px] md:w-full">
+            <form
+              className="w-min-[300px] md:w-full"
+              onSubmit={handleUpdateProfile}
+            >
               <Field
                 htmlFor="name"
                 label="Name"
                 inputType="text"
                 inputName="name"
                 inputID="name"
-                value={user?.displayName}
+                value={loggedInUser.name}
+                onChange={handleChange}
               />
               <Field
                 htmlFor="imageURL"
@@ -52,7 +90,8 @@ const Profile = () => {
                 inputType="url"
                 inputName="imageURL"
                 inputID="imageURL"
-                value={user?.photoURL}
+                value={loggedInUser.imageURL}
+                onChange={handleChange}
               />
               <div className="text-center">
                 <PrimaryButton
