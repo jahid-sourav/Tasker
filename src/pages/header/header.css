@@ -1,0 +1,101 @@
+@keyframes charge {
+  from {
+    transform: translateY(2rem);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes wave {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.content,
+.bottom-area {
+  width: 100%;
+  position: relative;
+  z-index: 100;
+}
+
+.main-area,
+.content,
+.bottom-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main-area,
+.content {
+  flex-direction: column;
+}
+
+.bottom-area {
+  flex-wrap: wrap;
+  max-width: 600px;
+  opacity: 0;
+  animation: charge 0.5s 0.5s forwards;
+}
+
+.text,
+.title {
+  backface-visibility: hidden;
+}
+
+.title {
+  opacity: 0;
+  animation: charge 0.5s forwards;
+}
+
+.text {
+  max-width: 50rem;
+  font-weight: 400;
+  padding: 2rem 0;
+  font-size: 1.3rem;
+  color: rgba(255, 255, 255, 0.9);
+  opacity: 0;
+  animation: charge 0.5s 0.3s forwards;
+}
+
+.wave {
+  opacity: 0.6;
+  position: absolute;
+  bottom: 40%;
+  left: 50%;
+  width: 6000px;
+  height: 6000px;
+  margin-left: -3000px;
+  transform-origin: 50% 48%;
+  border-radius: 46%;
+  animation: wave 12s infinite linear;
+  pointer-events: none;
+}
+
+.wave2 {
+  animation: wave 28s infinite linear;
+  opacity: 0.3;
+}
+
+.wave3 {
+  animation: wave 20s infinite linear;
+  opacity: 0.1;
+}
+
+.wave {
+  background: #000;
+}
+
+.main-area {
+  position: relative;
+  background-color: #74b9ff;
+  z-index: 999;
+}

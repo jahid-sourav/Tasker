@@ -1,13 +1,13 @@
+import Hero from "../../components/Hero";
 import PageTitle from "../../components/PageTitle";
+import "./header.css";
 
 const HomePage = () => {
   return (
-    <section className="py-5">
+    <main>
       <PageTitle pageName="Home" />
-      <div className="container">
-        <h1>Home Page</h1>
-      </div>
-    </section>
+      <Hero />
+    </main>
   );
 };
 
