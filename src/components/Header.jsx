@@ -1,3 +1,4 @@
+import { CiDark } from "react-icons/ci";
 import { NavLink } from "react-router-dom";
 import Logo from "../assets/logo.png";
 
@@ -54,6 +55,11 @@ const Header = () => {
               >
                 Create Task
               </NavLink>
+            </li>
+            <li>
+              <button type="button" className="text-2xl mt-1">
+                <CiDark />
+              </button>
             </li>
           </ul>
         </div>
