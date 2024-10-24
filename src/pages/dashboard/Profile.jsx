@@ -3,22 +3,35 @@ import Field from "../../components/Field";
 import PageTitle from "../../components/PageTitle";
 import PrimaryButton from "../../components/PrimaryButton";
 import SingleTask from "../../components/SingleTask";
+import useAuth from "../../hooks/useAuth";
 import useTasks from "../../hooks/useTasks";
 
 const Profile = () => {
   const { tasks } = useTasks();
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="flex justify-center">
+        <span className="loading loading-spinner loading-2xl"></span>
+      </div>
+    );
+  }
 
   return (
     <section className="py-5">
       <PageTitle pageName="Profile" />
       <div className="container">
-        <h1 className="text-4xl font-bold text-center mb-5">Profile Page</h1>
+        <h1 className="text-4xl font-bold text-center mb-5">
+          {user?.displayName}
+        </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <div className="mb-3">
               <div className="flex justify-center">
                 <img
-                  src="https://avatars.githubusercontent.com/u/77751898"
+                  referrerPolicy="no-referrer"
+                  src={user?.photoURL}
                   alt="User"
                   className="h-[200px] w-[200px] rounded-full"
                 />
@@ -31,7 +44,7 @@ const Profile = () => {
                 inputType="text"
                 inputName="name"
                 inputID="name"
-                value="Jahid"
+                value={user?.displayName}
               />
               <Field
                 htmlFor="imageURL"
@@ -39,7 +52,7 @@ const Profile = () => {
                 inputType="url"
                 inputName="imageURL"
                 inputID="imageURL"
-                value="Bhai URL EDIT Koren"
+                value={user?.photoURL}
               />
               <div className="text-center">
                 <PrimaryButton

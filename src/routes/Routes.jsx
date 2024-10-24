@@ -8,6 +8,7 @@ import TaskDetail from "../pages/dashboard/TaskDetail";
 import HomePage from "../pages/home/HomePage";
 import LoginPage from "../pages/login/LoginPage";
 import RegisterPage from "../pages/register/RegisterPage";
+import PrivateRoutes from "./PrivateRoutes";
 
 const router = createBrowserRouter([
   {
@@ -28,19 +29,35 @@ const router = createBrowserRouter([
       },
       {
         path: "/me",
-        element: <Profile />,
+        element: (
+          <PrivateRoutes>
+            <Profile />
+          </PrivateRoutes>
+        ),
       },
       {
         path: "/create-task",
-        element: <CreateTask />,
+        element: (
+          <PrivateRoutes>
+            <CreateTask />
+          </PrivateRoutes>
+        ),
       },
       {
         path: "/tasks/:id",
-        element: <TaskDetail />,
+        element: (
+          <PrivateRoutes>
+            <TaskDetail />
+          </PrivateRoutes>
+        ),
       },
       {
         path: "/edit-task/:id",
-        element: <EditTask />,
+        element: (
+          <PrivateRoutes>
+            <EditTask />
+          </PrivateRoutes>
+        ),
       },
     ],
   },

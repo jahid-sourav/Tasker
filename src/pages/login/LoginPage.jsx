@@ -1,13 +1,81 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { FaRegEye } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import Field from "../../components/Field";
 import PageTitle from "../../components/PageTitle";
 import PrimaryButton from "../../components/PrimaryButton";
+import useAuth from "../../hooks/useAuth";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
+  const { login, googleLogin, resetPassword } = useAuth();
+  const navigate = useNavigate();
+  const emailRef = useRef(null);
+
+  const [loginUser, setLoginUser] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    setLoginUser({
+      ...loginUser,
+      [name]: value,
+    });
+  };
+
+  const handleLogin = (event) => {
+    event.preventDefault();
+
+    setError("");
+
+    // Validation
+    if (loginUser.password.length < 8) {
+      toast.error("Please Provide an Email which has at least 8 digit!");
+      return;
+    }
+
+    login(loginUser.email, loginUser.password)
+      .then((result) => {
+        if (!result?.user?.emailVerified) {
+          toast.error("Please Verify Your Email First!");
+          return;
+        }
+        toast.success(`User ${result?.user?.displayName} Logged In!`);
+        navigate("/me");
+      })
+      .catch((error) => {
+        setError(error.message);
+      });
+  };
+
+  const handleGoogleLogin = () => {
+    googleLogin()
+      .then(() => {
+        navigate("/me");
+      })
+      .catch((error) => {
+        setError(error.message);
+      });
+  };
+
+  const handleResetPassword = () => {
+    const email = emailRef.current?.value;
+    if (!email) {
+      toast.error("Please Provide a Valid Email");
+      return;
+    }
+    resetPassword(email)
+      .then(() => {
+        toast.success("Email Sent! Please check your inbox.");
+      })
+      .catch((error) => toast.error(error.message));
+  };
 
   return (
     <section className="py-5">
@@ -16,16 +84,19 @@ const LoginPage = () => {
         <div className="flex justify-center items-center min-h-[80vh]">
           <div>
             <h1 className="font-bold text-4xl text-center mb-5">Login Page</h1>
-            <form className="w-[300px]">
+            <form className="w-[300px]" onSubmit={handleLogin}>
               <div className="mb-3">
                 <label htmlFor="email" className="font-semibold text-lg">
                   Email
                 </label>
                 <div className="mt-1">
                   <input
+                    ref={emailRef}
                     required={true}
                     type="email"
                     name="email"
+                    value={loginUser.email}
+                    onChange={handleChange}
                     id="email"
                     placeholder="Enter Your Email"
                     className="p-2 rounded border border-gray-400 w-full outline-none"
@@ -38,6 +109,8 @@ const LoginPage = () => {
                 label="Password"
                 inputType={showPassword ? "text" : "password"}
                 inputName="password"
+                value={loginUser.password}
+                onChange={handleChange}
                 inputID="password"
                 placeholder="Enter Your Password"
               >
@@ -50,10 +123,15 @@ const LoginPage = () => {
                 </button>
               </Field>
               <div className="text-right mb-5">
-                <button className="underline" type="button">
+                <button
+                  onClick={handleResetPassword}
+                  className="underline"
+                  type="button"
+                >
                   Forget Password
                 </button>
               </div>
+              <p className="my-2 text-red-600">{error}</p>
               <div className="text-center">
                 <PrimaryButton buttonType="submit" buttonName="Login" />
               </div>
@@ -66,7 +144,10 @@ const LoginPage = () => {
               here!
             </p>
             <div className="flex mt-5 gap-2 justify-center">
-              <button className="bg-white dark:bg-gray-900 dark:border-gray-700 dark:hover:bg-gray-800 rounded-lg hover:bg-gray-100 duration-300 transition-colors border px-8 py-2.5">
+              <button
+                onClick={handleGoogleLogin}
+                className="bg-white dark:bg-gray-900 dark:border-gray-700 dark:hover:bg-gray-800 rounded-lg hover:bg-gray-100 duration-300 transition-colors border px-8 py-2.5"
+              >
                 <svg
                   className="w-5 h-5 sm:h-6 sm:w-6"
                   viewBox="0 0 24 24"

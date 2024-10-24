@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 const Hero = () => {
+  const { user } = useAuth();
+
   return (
     <main className="main-area h-screen overflow-hidden px-2">
       <div className="content">
@@ -14,10 +17,10 @@ const Hero = () => {
       </div>
       <div className="bottom-area">
         <Link
-          to="/login"
+          to={user ? "/create-task" : "/login"}
           className="bg-white text-blue-400 font-semibold text-lg px-4 py-2 rounded-md"
         >
-          Get Started now
+          {user ? "Create A Task" : "Get Started now"}
         </Link>
       </div>
 
