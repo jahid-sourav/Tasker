@@ -1,6 +1,6 @@
 import Hero from "../../components/Hero";
 import PageTitle from "../../components/PageTitle";
-import "./header.css";
+import "./home.css";
 
 const HomePage = () => {
   return (

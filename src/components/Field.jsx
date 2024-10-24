@@ -16,6 +16,7 @@ const Field = ({
       </label>
       <div className="mt-1 relative">
         <input
+          required
           type={inputType}
           name={inputName}
           id={inputID}
