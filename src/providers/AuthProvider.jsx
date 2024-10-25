@@ -46,7 +46,16 @@ const AuthProvider = ({ children }) => {
   // Login With GitHub
   const gitHubLogin = () => {
     setLoading(true);
-    return signInWithPopup(auth, gitHubProvider);
+    return signInWithPopup(auth, gitHubProvider)
+      .then((result) => {
+        const user = result.user;
+        if (result.providerId === "github.com") {
+          result.user.emailVerified = true;
+        }
+        setUser(user);
+        return result;
+      })
+      .finally(() => setLoading(false));
   };
 
   // Reset Password
@@ -78,6 +87,7 @@ const AuthProvider = ({ children }) => {
 
     return () => {
       unsubscribe();
+      setUser(null);
     };
   }, []);
 

@@ -57,7 +57,8 @@ const LoginPage = () => {
 
   const handleGoogleLogin = () => {
     googleLogin()
-      .then(() => {
+      .then((result) => {
+        toast.success(`User ${result.user.displayName} LoggedIn!`);
         navigate("/me");
       })
       .catch((error) => {
@@ -67,7 +68,8 @@ const LoginPage = () => {
 
   const handleGitHubLogin = () => {
     gitHubLogin()
-      .then(() => {
+      .then((result) => {
+        toast.success(`User ${result.user.displayName} LoggedIn!`);
         navigate("/me");
       })
       .catch((error) => {
