@@ -5,6 +5,7 @@ import CreateTask from "../pages/dashboard/AddTask";
 import EditTask from "../pages/dashboard/EditTask";
 import Profile from "../pages/dashboard/Profile";
 import TaskDetail from "../pages/dashboard/TaskDetail";
+import ErrorPage from "../pages/errorPage/ErrorPage";
 import HomePage from "../pages/home/HomePage";
 import LoginPage from "../pages/login/LoginPage";
 import RegisterPage from "../pages/register/RegisterPage";
@@ -14,6 +15,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
