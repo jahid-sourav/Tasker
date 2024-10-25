@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { FaRegEye } from "react-icons/fa6";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Field from "../../components/Field";
 import PageTitle from "../../components/PageTitle";
@@ -13,6 +13,7 @@ const LoginPage = () => {
   const [error, setError] = useState("");
   const { login, googleLogin, gitHubLogin, resetPassword } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const emailRef = useRef(null);
 
   const [loginUser, setLoginUser] = useState({
@@ -47,7 +48,7 @@ const LoginPage = () => {
           return;
         }
         toast.success(`User ${result?.user?.displayName} Logged In!`);
-        navigate("/me");
+        navigate(location?.state ? location.state : "/me");
       })
       .catch((error) => {
         setError(error.message);
