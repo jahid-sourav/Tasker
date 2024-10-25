@@ -6,6 +6,10 @@ const PrivateRoutes = ({ children }) => {
   const { user, loading } = useAuth();
   const location = useLocation();
 
+  const isGitHubUser = user?.providerData?.some(
+    (provider) => provider.providerId === "github.com"
+  );
+
   if (loading) {
     return (
       <div className="flex justify-center">
@@ -14,7 +18,7 @@ const PrivateRoutes = ({ children }) => {
     );
   }
 
-  if (user?.emailVerified) {
+  if (isGitHubUser || user?.emailVerified) {
     return children;
   }
 

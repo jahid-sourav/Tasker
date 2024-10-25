@@ -49,8 +49,8 @@ const AuthProvider = ({ children }) => {
     return signInWithPopup(auth, gitHubProvider)
       .then((result) => {
         const user = result.user;
-        if (result.providerId === "github.com") {
-          result.user.emailVerified = true;
+        if (user.providerData[0].providerId === "github.com") {
+          user.emailVerified = true;
         }
         setUser(user);
         return result;
